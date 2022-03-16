@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="MainKt" type="JetRunConfigurationType" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="MainKt" />
+    <option name="MAIN_CLASS_NAME" value="lab1.MainKt" />
     <module name="kotlin-oop-practice-2022.main" />
     <shortenClasspath name="NONE" />
     <method v="2">
