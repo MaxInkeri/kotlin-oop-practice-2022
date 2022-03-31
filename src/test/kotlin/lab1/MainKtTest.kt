@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions.*
 
 internal class MainKtTest {
 
-    private val books = listOf(Book("Short Title", "Author1", 2021), Book("Book with Long Title", "Author2, Author3", 2022))
+    private val books = listOf(Book("Short Title", listOf("Author1"), 2021), Book("Book with Long Title", listOf("Author2", "Author3"), 2022))
 
     @Test
     fun parseBooks() {
@@ -43,5 +43,11 @@ internal class MainKtTest {
     fun findNewest() {
         val book = findBook(books, BookFinder.NEWEST)
         assertEquals(books[1], book)
+    }
+
+    @Test
+    fun findInEmptyList() {
+        val book = findBook(emptyList(), BookFinder.NEWEST)
+        assertEquals(null, book)
     }
 }
