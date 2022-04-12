@@ -1,5 +1,7 @@
 package matrix
 
+private const val EPSILON: Double = 0.000001
+
 class Matrix private constructor(h: Int, w: Int, initialValue: Double = 0.0, initialData: Array<DoubleArray>?) {
     val height: Int
         get() = data.size
@@ -123,7 +125,12 @@ class Matrix private constructor(h: Int, w: Int, initialValue: Double = 0.0, ini
 
         other as Matrix
 
-        if (!data.contentDeepEquals(other.data)) return false
+        for ((i, row) in data.withIndex()) {
+            for ((j, value) in row.withIndex()) {
+                val equals = Math.abs(value - other.data[i][j]) <= EPSILON
+                if (!equals) return false
+            }
+        }
 
         return true
     }
