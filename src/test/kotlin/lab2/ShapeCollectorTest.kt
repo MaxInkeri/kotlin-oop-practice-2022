@@ -84,13 +84,13 @@ internal class ShapeCollectorTest {
 
     @Test
     fun findSmallest() {
-        val smallest = collector.findByArea(collector.smallestArea)
+        val smallest = collector.findByArea(ShapeCollector.Mode.SMALLEST_AREA)
         assertEquals(triangle1, smallest)
     }
 
     @Test
     fun findBiggest() {
-        val biggest = collector.findByArea(collector.biggestArea)
+        val biggest = collector.findByArea(ShapeCollector.Mode.BIGGEST_AREA)
         assertEquals(circle2, biggest)
     }
 

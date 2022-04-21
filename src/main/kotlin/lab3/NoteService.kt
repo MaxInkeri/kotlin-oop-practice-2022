@@ -17,7 +17,11 @@ interface NoteService {
     fun removeNote(note: Note)
 
     fun find(str: String): List<Note>
-    fun getSortedBy(prop: Boolean): List<Note>
+
+    enum class SortedBy {
+        TITLE, DATE
+    }
+    fun getSortedBy(prop: SortedBy): List<Note>
 
     fun clear()
 }

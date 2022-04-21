@@ -2,27 +2,28 @@ package lab3
 
 import java.time.LocalDateTime
 
+// Считаю уместным сделать NoteServiceInstance объектом, так как необходимость создавать несколько экземпляров класса, по идее, отсутствует. Разве не так?
 object NoteServiceInstance: NoteService {
-    private val notes = emptyList<Note>().toMutableList()
+    private val notes = mutableListOf<Note>()
 
     override fun getAllNotes(): List<Note> {
         return notes.toList()
     }
 
     override fun getAllTextNotes(): List<Note.TextNote> {
-        val textNotes = emptyList<Note.TextNote>().toMutableList()
+        val textNotes = mutableListOf<Note.TextNote>()
         notes.forEach { if (it is Note.TextNote) textNotes.add(it) }
         return textNotes.toList()
     }
 
     override fun getAllTasks(): List<Note.Task> {
-        val tasks = emptyList<Note.Task>().toMutableList()
+        val tasks = mutableListOf<Note.Task>()
         notes.forEach { if (it is Note.Task) tasks.add(it) }
         return tasks.toList()
     }
 
     override fun getAllLinks(): List<Note.Link> {
-        val links = emptyList<Note.Link>().toMutableList()
+        val links = mutableListOf<Note.Link>()
         notes.forEach { if (it is Note.Link) links.add(it) }
         return links.toList()
     }
@@ -65,10 +66,8 @@ object NoteServiceInstance: NoteService {
         return notes.filter { it.title.contains(str) }
     }
 
-    const val sortedByTitle = false
-    const val sortedByDate = true
-    override fun getSortedBy(prop: Boolean): List<Note> {
-        if (prop == sortedByTitle) {
+    override fun getSortedBy(prop: NoteService.SortedBy): List<Note> {
+        if (prop == NoteService.SortedBy.TITLE) {
             return notes.sortedBy { it.title }
         }
         return notes.sortedBy { it.date }

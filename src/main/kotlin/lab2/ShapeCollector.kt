@@ -33,22 +33,23 @@ class ShapeCollector(initialShapes: List<ColoredShape2d> = emptyList()) {
             return area
         }
 
-    fun find(shapeClass: KClass<out ColoredShape2d>): MutableList<ColoredShape2d> { // find shapes by class
-        val list = emptyList<ColoredShape2d>().toMutableList()
+    fun find(shapeClass: KClass<out ColoredShape2d>): List<ColoredShape2d> { // find shapes by class
+        val list = mutableListOf<ColoredShape2d>()
         for (shape in shapesList) {
             if (shape::class == shapeClass)
                 list.add(shape)
         }
-        return list
+        return list.toList()
     }
 
-    val smallestArea = false
-    val biggestArea = true
-    fun findByArea(mode: Boolean): ColoredShape2d? { // findByArea(false) -> find the smallest, findByArea(true) -> find the biggest
+    enum class Mode {
+        SMALLEST_AREA, BIGGEST_AREA
+    }
+    fun findByArea(mode: Mode): ColoredShape2d? {
         var best: ColoredShape2d? = null
         for (shape in shapesList) {
-            if (mode == smallestArea && shape.calcArea() < (best?.calcArea() ?: Double.MAX_VALUE)
-                || mode == biggestArea && shape.calcArea() > (best?.calcArea() ?: 0.0)
+            if (mode == Mode.SMALLEST_AREA && shape.calcArea() < (best?.calcArea() ?: Double.MAX_VALUE)
+                || mode == Mode.BIGGEST_AREA && shape.calcArea() > (best?.calcArea() ?: 0.0)
             ) best = shape
         }
         return best

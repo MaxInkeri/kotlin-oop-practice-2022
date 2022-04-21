@@ -113,7 +113,7 @@ internal class NoteServiceTest {
         NoteServiceInstance.createTask("Important Task", "Task 2", 2023, 3, 23)
         NoteServiceInstance.createLink("Link", "https://example.com")
         NoteServiceInstance.createLink("Important Link", "https://example.net")
-        assertEquals(listOf(link2, textNote2, task2, link1, textNote1, task1), NoteServiceInstance.getSortedBy(NoteServiceInstance.sortedByTitle))
+        assertEquals(listOf(link2, textNote2, task2, link1, textNote1, task1), NoteServiceInstance.getSortedBy(NoteService.SortedBy.TITLE))
     }
 
     @Test
@@ -125,6 +125,6 @@ internal class NoteServiceTest {
         NoteServiceInstance.createTask("Important Task", "Task 2", 2023, 3, 23)
         NoteServiceInstance.createLink("Link", "https://example.com")
         NoteServiceInstance.createLink("Important Link", "https://example.net")
-        assertEquals(listOf(textNote1, textNote2, task1, task2, link1, link2), NoteServiceInstance.getSortedBy(NoteServiceInstance.sortedByDate))
+        assertEquals(listOf(textNote1, textNote2, task1, task2, link1, link2), NoteServiceInstance.getSortedBy(NoteService.SortedBy.DATE))
     }
 }
