@@ -3,18 +3,22 @@ package tictactoe.model
 import tictactoe.model.Cell.*
 
 enum class Cell(private val textValue: String) {
-    X("x"),
-    O("o"),
+    X("X"),
+    O("O"),
     EMPTY(" ");
 
     override fun toString(): String = textValue
 }
 
-enum class State {
-    X_MOVE, O_MOVE, X_WIN, O_WIN, DRAW
+enum class State(val textValue: String) {
+    X_MOVE("Waiting for X move..."),
+    O_MOVE("Waiting for O move..."),
+    X_WIN("Game finished. X win, congrats!!!"),
+    O_WIN("Game finished. O win, congrats!!!"),
+    DRAW("Game finished. Draw")
 }
 
-private const val BOARD_SIZE = 3
+const val BOARD_SIZE = 3
 private val FIRST_MOVE = State.X_MOVE
 
 val GAME_NOT_FINISHED = setOf(State.O_MOVE, State.X_MOVE)
@@ -37,7 +41,12 @@ class Model {
         listeners.add(listener)
     }
 
+    fun removeModelChangeListener(listener: ModelChangeListener) {
+        listeners.remove(listener)
+    }
+
     fun doMove(col: Int, row: Int) {
+
         require(state == State.O_MOVE || state == State.X_MOVE) { "Game finished" }
 
         require(col in 0 until BOARD_SIZE) { "Wrong column" }
