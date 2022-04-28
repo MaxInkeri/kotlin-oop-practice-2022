@@ -1,5 +1,6 @@
-package lab2
+package lab5
 
+import lab2.*
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -15,7 +16,7 @@ internal class ShapeCollectorTest {
     private val rectangle1 = Rectangle(11.0, 6.0, red, blue) // 66
     private val rectangle2 = Rectangle(12.0, 8.0, green, red) // 96
     private val square1 = Square(8.0, green, green) // 64
-    private val square2 = Square(10.0, green, blue) // 100
+    private val square2 = Square(9.0, green, blue) // 81
     private val triangle1 = Triangle(10.0, 12.0, PI/2, blue, red) // 60
     private val triangle2 = Triangle(20.0, 20.0, PI/6, blue, green) // 100
     private val shapesList = listOf(circle1, circle2, rectangle1, rectangle2, square1, square2, triangle1, triangle2)
@@ -54,8 +55,8 @@ internal class ShapeCollectorTest {
 
     @Test
     fun getTotalArea() {
-        // pi*5^2 + pi*6^2 + 11*6 + 12*8 + 8^2 + 10^2 + 10*12*sin(pi/2)/2 + 20*20*sin(pi/6)/2
-        assert(677.637151869 - collector.totalArea < 0.00000001)
+        // pi*5^2 + pi*6^2 + 11*6 + 12*8 + 8^2 + 9^2 + 10*12*sin(pi/2)/2 + 20*20*sin(pi/6)/2
+        assert(658.637151869 - collector.totalArea < 0.00000001)
     }
 
     @Test
@@ -161,8 +162,21 @@ internal class ShapeCollectorTest {
 
     @Test
     fun addFromCollector() {
-        val newCollector = ShapeCollector()
+        val newCollector = ShapeCollector<ColoredShape2d>()
         newCollector.add(collector)
         assertEquals(collector, newCollector)
+    }
+
+    @Test
+    fun getSortedByAreaDescending() {
+        val sorted = collector.getSorted(compareByDescending { it.calcArea() })
+        assertEquals(listOf(circle2, triangle2, rectangle2, square2, circle1, rectangle1, square1, triangle1), sorted)
+    }
+
+    @Test
+    fun onlyCircles() {
+        val circlesList = listOf(circle1, circle2)
+        val circlesCollector = ShapeCollector(circlesList)
+        assertEquals(circlesCollector.shapes, circlesCollector.find(Circle::class))
     }
 }
