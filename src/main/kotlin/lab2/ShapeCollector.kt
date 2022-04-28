@@ -55,21 +55,22 @@ class ShapeCollector(initialShapes: List<ColoredShape2d> = emptyList()) {
         return best
     }
 
-    val borderColor = false
-    val fillColor = true
-    fun findByColor(mode: Boolean, color: Color): List<ColoredShape2d> { // findByColor(false) -> find by border color, findByColor(true) -> find by fill color
+    enum class ColorMode {
+        BORDER_COLOR, FILL_COLOR
+    }
+    fun findByColor(mode: ColorMode, color: Color): List<ColoredShape2d> {
         val list = emptyList<ColoredShape2d>().toMutableList()
         for (shape in shapesList) {
-            if (mode == borderColor && shape.borderColor == color || mode == fillColor && shape.fillColor == color)
+            if (mode == ColorMode.BORDER_COLOR && shape.borderColor == color || mode == ColorMode.FILL_COLOR && shape.fillColor == color)
                 list.add(shape)
         }
         return list
     }
 
-    fun groupByColor(mode: Boolean): Map<Color, List<ColoredShape2d>> { // groupByColor(false) -> group by border color, findByColor(true) -> group by fill color
+    fun groupByColor(mode: ColorMode): Map<Color, List<ColoredShape2d>> {
         val map = emptyMap<Color, MutableList<ColoredShape2d>>().toMutableMap()
         for (shape in shapesList) {
-            val color = if (mode == borderColor) shape.borderColor else shape.fillColor
+            val color = if (mode == ColorMode.BORDER_COLOR) shape.borderColor else shape.fillColor
             if (map.containsKey(color)) map[color]?.add(shape)
             else map[color] = listOf(shape).toMutableList()
         }
