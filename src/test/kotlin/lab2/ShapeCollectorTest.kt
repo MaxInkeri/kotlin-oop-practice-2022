@@ -84,61 +84,61 @@ internal class ShapeCollectorTest {
 
     @Test
     fun findSmallest() {
-        val smallest = collector.findByArea(ShapeCollector.Mode.SMALLEST_AREA)
+        val smallest = collector.findByArea(ShapeCollector.AreaMode.SMALLEST_AREA)
         assertEquals(triangle1, smallest)
     }
 
     @Test
     fun findBiggest() {
-        val biggest = collector.findByArea(ShapeCollector.Mode.BIGGEST_AREA)
+        val biggest = collector.findByArea(ShapeCollector.AreaMode.BIGGEST_AREA)
         assertEquals(circle2, biggest)
     }
 
     @Test
     fun findBorderRed() {
-        val list = collector.findByColor(collector.borderColor, red)
+        val list = collector.findByColor(ShapeCollector.ColorMode.BORDER_COLOR, red)
         assertEquals(listOf(circle1, circle2, rectangle1), list)
     }
 
     @Test
     fun findBorderGreen() {
-        val list = collector.findByColor(collector.borderColor, green)
+        val list = collector.findByColor(ShapeCollector.ColorMode.BORDER_COLOR, green)
         assertEquals(listOf(rectangle2, square1, square2), list)
     }
 
     @Test
     fun findBorderBlue() {
-        val list = collector.findByColor(collector.borderColor, blue)
+        val list = collector.findByColor(ShapeCollector.ColorMode.BORDER_COLOR, blue)
         assertEquals(listOf(triangle1, triangle2), list)
     }
 
     @Test
     fun findFillRed() {
-        val list = collector.findByColor(collector.fillColor, red)
+        val list = collector.findByColor(ShapeCollector.ColorMode.FILL_COLOR, red)
         assertEquals(listOf(circle1, rectangle2, triangle1), list)
     }
 
     @Test
     fun findFillGreen() {
-        val list = collector.findByColor(collector.fillColor, green)
+        val list = collector.findByColor(ShapeCollector.ColorMode.FILL_COLOR, green)
         assertEquals(listOf(circle2, square1, triangle2), list)
     }
 
     @Test
     fun findFillBlue() {
-        val list = collector.findByColor(collector.fillColor, blue)
+        val list = collector.findByColor(ShapeCollector.ColorMode.FILL_COLOR, blue)
         assertEquals(listOf(rectangle1, square2), list)
     }
 
     @Test
     fun groupByBorderColor() {
-        val map = collector.groupByColor(collector.borderColor)
+        val map = collector.groupByColor(ShapeCollector.ColorMode.BORDER_COLOR)
         assertEquals(mapOf(red to listOf(circle1, circle2, rectangle1), green to listOf(rectangle2, square1, square2), blue to listOf(triangle1, triangle2)), map)
     }
 
     @Test
     fun groupByFillColor() {
-        val map = collector.groupByColor(collector.fillColor)
+        val map = collector.groupByColor(ShapeCollector.ColorMode.FILL_COLOR)
         assertEquals(mapOf(red to listOf(circle1, rectangle2, triangle1), green to listOf(circle2, square1, triangle2), blue to listOf(rectangle1, square2)), map)
     }
 

@@ -42,14 +42,14 @@ class ShapeCollector(initialShapes: List<ColoredShape2d> = emptyList()) {
         return list.toList()
     }
 
-    enum class Mode {
+    enum class AreaMode {
         SMALLEST_AREA, BIGGEST_AREA
     }
-    fun findByArea(mode: Mode): ColoredShape2d? {
+    fun findByArea(mode: AreaMode): ColoredShape2d? {
         var best: ColoredShape2d? = null
         for (shape in shapesList) {
-            if (mode == Mode.SMALLEST_AREA && shape.calcArea() < (best?.calcArea() ?: Double.MAX_VALUE)
-                || mode == Mode.BIGGEST_AREA && shape.calcArea() > (best?.calcArea() ?: 0.0)
+            if (mode == AreaMode.SMALLEST_AREA && shape.calcArea() < (best?.calcArea() ?: Double.MAX_VALUE)
+                || mode == AreaMode.BIGGEST_AREA && shape.calcArea() > (best?.calcArea() ?: 0.0)
             ) best = shape
         }
         return best
