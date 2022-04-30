@@ -1,5 +1,6 @@
 package lab2
 
+@kotlinx.serialization.Serializable
 data class Color(val r: Int, val g: Int, val b: Int, val a: Double = 1.0) { // 0 <= r, g, b <= 255; 0 <= a <= 1
 
     init {

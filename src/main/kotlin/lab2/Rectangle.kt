@@ -1,5 +1,6 @@
 package lab2
 
+@kotlinx.serialization.Serializable
 data class Rectangle(
     val a: Double,
     val b: Double,

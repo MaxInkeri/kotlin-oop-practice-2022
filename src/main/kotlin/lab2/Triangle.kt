@@ -2,6 +2,7 @@ package lab2
 
 import kotlin.math.sin
 
+@kotlinx.serialization.Serializable
 data class Triangle(
     val a: Double,
     val b: Double,

@@ -1,5 +1,6 @@
 package lab2
 
+@kotlinx.serialization.Serializable
 data class Square(
     val a: Double,
     override val borderColor: Color = Color(0, 0, 0),

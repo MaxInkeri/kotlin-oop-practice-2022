@@ -2,6 +2,7 @@ package lab2
 
 import kotlin.math.PI
 
+@kotlinx.serialization.Serializable
 data class Circle(
     val r: Double,
     override val borderColor: Color = Color(0, 0, 0),
