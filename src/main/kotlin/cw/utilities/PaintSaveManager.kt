@@ -3,7 +3,6 @@ package cw.utilities
 import cw.PaintUI
 import java.io.File
 import java.io.IOException
-import java.lang.RuntimeException
 import javax.imageio.ImageIO
 import javax.swing.JFileChooser
 import javax.swing.JOptionPane
@@ -30,11 +29,7 @@ object PaintSaveManager {
             JFileChooser.APPROVE_OPTION -> {
                 var file = fileChooser.selectedFile
                 if (!acceptedExtensions.contains(file.extension)) {
-                    file = File(file.path + when (fileChooser.fileFilter) {
-                        filters[0] -> ".jpg"
-                        filters[1] -> ".bmp"
-                        else -> throw RuntimeException()
-                    })
+                    file = File(file.path + "." + (fileChooser.fileFilter as FileNameExtensionFilter).extensions[0])
                 }
                 try {
                     ImageIO.write(PaintUI.canvas.image, file.extension, file)

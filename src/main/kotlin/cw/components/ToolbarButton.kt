@@ -1,14 +1,18 @@
 package cw.components
 
 import cw.PaintUI
+import cw.enums.PaintAction
+import cw.enums.PaintShape
 import cw.listeners.resizer.ButtonResizer
 import cw.utilities.PaintSaveManager
 import cw.utilities.PaintUtilities
+import org.drjekyll.fontchooser.FontDialog
 import java.awt.Color
 import javax.swing.ImageIcon
 import javax.swing.JOptionPane
+import javax.swing.WindowConstants
 
-class ToolbarButton(private val type: PaintUI.Action): ResizableButton(type.buttonSizeFactor) {
+class ToolbarButton(private val type: PaintAction): ResizableButton(type.buttonSizeFactor) {
 
     private val iconOriginal: ImageIcon
 
@@ -20,7 +24,7 @@ class ToolbarButton(private val type: PaintUI.Action): ResizableButton(type.butt
         if (type == PaintUI.currentAction) {
             background = Color.LIGHT_GRAY
         }
-        if (type == PaintUI.Action.UNDO || type == PaintUI.Action.REDO) {
+        if (type == PaintAction.UNDO || type == PaintAction.REDO) {
             isEnabled = false
         }
 
@@ -29,30 +33,40 @@ class ToolbarButton(private val type: PaintUI.Action): ResizableButton(type.butt
         addActionListener {
             if (!type.instant) {
                 PaintUI.currentAction = type
-                PaintUI.Action.forEach {
+                PaintAction.forEach {
                     it.button!!.background = null
                 }
                 background = Color.LIGHT_GRAY
             }
             when (type) {
-                PaintUI.Action.SHAPE -> {
+                PaintAction.SHAPE -> {
                     try {
-                        PaintUI.currentShape = PaintUI.Shape.find(
+                        PaintUI.currentShape = PaintShape.find(
                             JOptionPane.showInputDialog(
                             this,
                             "",
                             "Shape",
                             JOptionPane.PLAIN_MESSAGE,
                             null,
-                            PaintUI.Shape.values().map { it.title }.toTypedArray(),
+                            PaintShape.values().map { it.title }.toTypedArray(),
                             PaintUI.currentShape.title
                         ) as String)!!
                     }
                     catch (_: java.lang.NullPointerException) {}
                 }
-                PaintUI.Action.UNDO -> PaintUI.canvas.undo()
-                PaintUI.Action.REDO -> PaintUI.canvas.redo()
-                PaintUI.Action.SAVE -> PaintSaveManager.save()
+                PaintAction.TEXT -> {
+                    FontDialog(PaintUI, "Font", true).apply {
+                        selectedFont = PaintUI.canvas.textFont
+                        defaultCloseOperation = WindowConstants.DISPOSE_ON_CLOSE
+                        isVisible = true
+                        if (!isCancelSelected) {
+                            PaintUI.canvas.updateFont(selectedFont)
+                        }
+                    }
+                }
+                PaintAction.UNDO -> PaintUI.canvas.undo()
+                PaintAction.REDO -> PaintUI.canvas.redo()
+                PaintAction.SAVE -> PaintSaveManager.save()
                 else -> {}
             }
         }

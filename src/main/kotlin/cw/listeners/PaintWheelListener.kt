@@ -16,10 +16,10 @@ class PaintWheelListener(private val canvas: PaintCanvas, private val scaleSpinn
         val rotation = e.wheelRotation
         canvas.apply {
             if (e.isControlDown) {
-                scale -= SCALING_VELOCITY * rotation
-                if (scale > MAX_SCALE) scale = MAX_SCALE
-                if (scale < MIN_SCALE) scale = MIN_SCALE
-                scaleSpinner.value = scale
+                var newScale = scale - SCALING_VELOCITY * rotation
+                if (newScale > MAX_SCALE) newScale = MAX_SCALE
+                if (newScale < MIN_SCALE) newScale = MIN_SCALE
+                scaleSpinner.value = newScale
             } else if (e.isShiftDown) {
                 currentShift.x -= SHIFT_VELOCITY * rotation
                 updateLocation()
