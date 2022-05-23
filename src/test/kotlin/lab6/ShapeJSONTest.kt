@@ -24,16 +24,31 @@ internal class ShapeJSONTest {
 
     @Test
     fun serializeAndDeserialize() {
-        val str = ShapeJSON.serialize(collector)
-        val newCollector = ShapeJSON.deserialize(str)
+        val str = ShapeJSON.serializeCollector(collector)
+        val newCollector = ShapeJSON.deserializeAsCollector(str)
         assertEquals(collector, newCollector)
+    }
+
+    @Test
+    fun serializeAndDeserializeAsList() {
+        val str = ShapeJSON.serialize(collector.shapes)
+        val newList = ShapeJSON.deserialize(str)
+        assertEquals(collector.shapes, newList)
     }
 
     @Test
     fun writeAndRead() {
         val file = "shapes.json"
-        ShapeFiles.write(file, collector)
-        val newCollector = ShapeFiles.read(file)
+        ShapeFiles.writeCollector(file, collector)
+        val newCollector = ShapeFiles.readAsCollector(file)
         assertEquals(collector, newCollector)
+    }
+
+    @Test
+    fun writeAndReadAsList() {
+        val file = "shapes.json"
+        ShapeFiles.write(file, collector.shapes)
+        val newList = ShapeFiles.read(file)
+        assertEquals(collector.shapes, newList)
     }
 }

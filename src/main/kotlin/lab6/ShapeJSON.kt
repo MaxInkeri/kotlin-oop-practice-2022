@@ -21,14 +21,19 @@ object ShapeJSON {
         serializersModule = module
     }
 
-    fun serialize(collector: ShapeCollector): String {
-        return json.encodeToString(collector.shapes)
+    fun serialize(shapes: List<ColoredShape2d>): String {
+        return json.encodeToString(shapes)
     }
 
-    fun deserialize(string: String): ShapeCollector {
-        val collector = ShapeCollector()
-        val shapes = json.decodeFromString<List<ColoredShape2d>>(string)
-        collector.add(shapes)
-        return collector
+    fun serializeCollector(collector: ShapeCollector): String {
+        return serialize(collector.shapes)
+    }
+
+    fun deserialize(string: String): List<ColoredShape2d> {
+        return json.decodeFromString(string)
+    }
+
+    fun deserializeAsCollector(string: String): ShapeCollector {
+        return ShapeCollector(deserialize(string))
     }
 }

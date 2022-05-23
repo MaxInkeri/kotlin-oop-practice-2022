@@ -79,7 +79,7 @@ class ShapeCollector<T: ColoredShape2d>(initialShapes: List<T> = emptyList()) {
         return map
     }
 
-    fun getSorted(comparator: Comparator<T>): List<T> {
+    fun getSorted(comparator: Comparator<in T>): List<T> {
         return shapesList.sortedWith(comparator)
     }
 

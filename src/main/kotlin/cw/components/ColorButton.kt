@@ -19,7 +19,10 @@ class ColorButton(private val type: ColorButtonInfo): ResizableButton(SMALL_BUTT
         isRequestFocusEnabled = false
         background = type.defaultColor
         addActionListener {
-            updateIcon(JColorChooser.showDialog(PaintUI, type.title, background))
+            try {
+                updateIcon(JColorChooser.showDialog(PaintUI, type.title, background))
+            }
+            catch (_: java.lang.NullPointerException) {}
         }
         PaintUI.addComponentListener(ButtonResizer(this))
     }
