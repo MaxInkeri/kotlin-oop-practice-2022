@@ -195,6 +195,7 @@ object PaintUI: JFrame("is not Paint") {
     private fun createBorderCheckbox(): JCheckBox {
         return JCheckBox("Border").apply {
             isSelected = canvas.drawBorder
+            isFocusable = false
             addItemListener {
                 canvas.drawBorder = (it.stateChange == ItemEvent.SELECTED)
             }
@@ -204,6 +205,7 @@ object PaintUI: JFrame("is not Paint") {
     private fun createFillingCheckbox(): JCheckBox {
         return JCheckBox("Filling").apply {
             isSelected = canvas.drawFilling
+            isFocusable = false
             addItemListener {
                 canvas.drawFilling = (it.stateChange == ItemEvent.SELECTED)
             }
