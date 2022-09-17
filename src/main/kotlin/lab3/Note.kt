@@ -8,8 +8,10 @@ sealed class Note(open val title: String, open val content: String) {
     data class TextNote(override val title: String, override val content: String): Note(title, content)
 
     data class Task(override val title: String, override val content: String, val deadline: LocalDateTime): Note(title, content) {
-        constructor(title: String, content: String, year: Int, month: Int, day: Int, hour: Int, minute: Int): this(title, content, LocalDateTime.of(year, month, day, hour, minute))
-        constructor(title: String, content: String, year: Int, month: Int, day: Int): this(title, content, year, month, day, 0, 0)
+        constructor(title: String, content: String, year: Int, month: Int, day: Int, hour: Int, minute: Int):
+                this(title, content, LocalDateTime.of(year, month, day, hour, minute))
+        constructor(title: String, content: String, year: Int, month: Int, day: Int):
+                this(title, content, year, month, day, 0, 0)
         init {
             if (deadline <= date) {
                 error("Deadline must be later than the current date")
